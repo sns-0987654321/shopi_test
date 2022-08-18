@@ -1,0 +1,53 @@
+<!-- Modal popup box -->
+<div id="mpopupBox_{{iprt.id}}" class="mpopup mpopupBox mpopupLink_{{iprt.id}}">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">×</span>
+            <h2>{{iprt.title}}</h2>
+        </div>
+        <div class="modal-body">
+  <div class="featured-product product grid grid--2-col gradient grid--2-col-tablet">
+         <div class="grid__item product__media-wrapper m-2">
+           {% for media in iprt.media %}
+  {% case media.media_type %}
+    {% when 'image' %}
+      <div class="product-image">
+        <img id="Thumbnail-{{ iprt.id }}-0"
+                      {{ media | image_url }} {{ media.width }}w"
+                      src="{{ media | image_url: width: 416 }}"
+                      sizes="(min-width: {{ settings.page_width }}px) calc(({{ settings.page_width | minus: 100 | times: media_width | round }} - 4rem) / 4), (min-width: 990px) calc(({{ media_width | times: 100 }}vw - 4rem) / 4), (min-width: 750px) calc((100vw - 15rem) / 8), calc((100vw - 14rem) / 3)"
+                      alt="{{ media.alt | escape }}"
+                      height="416"
+                      width="416"
+                      loading="lazy"
+                    >
+       </div>
+      {% when 'external_video' %}
+        <div class="product-single__media">
+          {{ media | external_video_tag }}
+        </div>
+      {% when 'video' %}
+        <div class="product-single__video">
+          {{ media | video_tag: controls: true }}
+        </div>
+      {% when 'model' %}
+        <div class="product-single__media">
+          {{ media | model_viewer_tag }}
+        </div>
+      {% else %}
+        <div class="product-single__media">
+          {{ media | media_tag }}
+        </div>
+    {% endcase %}
+{% break %}
+{% endfor %}
+              </div>
+            <div class="grid__item product__media-wrapper m-2">{{iprt.description}}</div>
+        </div>
+        <div class="modal-footer">
+           
+        </div>
+    </div>
+</div>
+</div>
